@@ -4,6 +4,7 @@ import datetime
 import csv
 from typing import Iterable, Any
 import pytz
+import os
 
 
 IP_ADDRESS = "8.8.8.8"
@@ -75,7 +76,7 @@ def internet_is_connected() -> bool:
     try:
         subprocess.check_output(["ping", "-c", "1", IP_ADDRESS])
         succeeded = True
-    except subprocess.CalledProcessError:
+    except subprocess.CalledProcessError as e:
         while retries < MAX_RETRIES and not succeeded:
             time.sleep(RETRY_INTERVAL)
             succeeded = test_connection()
@@ -106,7 +107,7 @@ def main():
     global OUTPUT_FILE
 
     file_name = current_time().strftime("%m_%d_%Y____%H_%M_%S")
-    OUTPUT_FILE = f"/Users/matthewshoemaker/outages/{file_name}.csv"
+    OUTPUT_FILE = f"{os.path.expanduser('~')}/outages/NETWORK_LOGS_{file_name}.csv"
     print(f"Created output file: {OUTPUT_FILE}")
     write_to_csv(['Start Time', "End Time", "Total Seconds", "Total Minutes"], "w+")
 

@@ -4,6 +4,7 @@ import datetime
 import time
 import csv
 from typing import Iterable, Any
+import os
 
 OUTPUT_FILE: str = ""
 
@@ -47,7 +48,7 @@ def main():
     global OUTPUT_FILE
 
     file_name = current_time().strftime("%m_%d_%Y____%H_%M_%S")
-    OUTPUT_FILE = f"/Users/matthewshoemaker/odometer/{file_name}.csv"
+    OUTPUT_FILE = f"{os.path.expanduser('~')}/odometer/{file_name}.csv"
     print(f"\nCreated output file: {OUTPUT_FILE}\n")
     write_to_csv(['Time', "Download (Mbps)", "Upload (Mbps)"], "w+")
 
